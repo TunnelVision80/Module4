@@ -7,6 +7,12 @@ app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 
+// Require data from data.js
+import {AGENTS_LIST, FORMATTER } from './data.js';
+
+import { calcResidential } from './calcResidential.js';
+
+
 const hello = (req, res) => {
   res.send('Hello, World!');
 };
@@ -27,7 +33,23 @@ const emailList = (req, res) => {
   res.send('Email List');
 };
 
-app.get('/emailList', emailList);
+app.get('/email-list', emailList); // Fix: changed to lowercase "l"
+
+//  Fuctions to set up API Endpoints
+const apiEndpoint = (APP) => {
+  APP.get('/hello', hello);
+  APP.get('/status', status);
+  APP.get('/error', error);
+  APP.get('/email-list', emailList);
+  APP.get('/region-avg', regionAvg);
+  APP.get('/calc-residential', calcResidential);
+  APP.get('/contact-us', contactUs);
+
+};
+
+const calcResidential = (req, res) => {
+  res.send('calcResidential');
+};
 
 // New endpoint: /region/avg
 const regionAvg = (req, res) => {
@@ -38,11 +60,9 @@ const regionAvg = (req, res) => {
 app.get('/region/avg', regionAvg);
 
 // Catch-all error handler
-app.use((req, res) => {
-  res.status(404).send('Not Found');
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(500).send('Internal Server Error');
 });
-
-
-
 
 
