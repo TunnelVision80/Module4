@@ -8,21 +8,22 @@ app.listen(port, () => {
 });
 
 // Require data from data.js
-import {AGENTS_LIST, FORMATTER } from './data.js';
-
-import { calcResidential } from './calcResidential.js';
+const  {AGENTS_LIST, FORMATTER } = require('./data.js');
+const { residentialCalcul } = require('./residentialCalcul.js');
+const environment = process.env.ENVIORMENT;
 
 
 const hello = (req, res) => {
+  console.log('Hello, World!');
   res.send('Hello, World!');
 };
 
 const status = (req, res) => {
-  res.send('OK');
+  const ENV = process.env.ENVIORMENT;
+  res.send('environment (ENV) is listening on port (PORT)');
 };
 
-app.get('/hello', hello);
-app.get('/status', status);
+
 
 app.get('/hello/:name', (req, res) => {
   const name = req.params.name;
@@ -30,7 +31,8 @@ app.get('/hello/:name', (req, res) => {
 });
 
 const emailList = (req, res) => {
-  res.send('Email List');
+  const emailList = AGENTS_LIST.map(agent => agent.email);
+  res.json('emailList');
 };
 
 app.get('/email-list', emailList); // Fix: changed to lowercase "l"
@@ -60,9 +62,9 @@ const regionAvg = (req, res) => {
 app.get('/region/avg', regionAvg);
 
 // Catch-all error handler
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).send('Internal Server Error');
+app.get('/error', (req, res) => {
+  res.status(500).json({
+    errorCode: 500,
+    message: 'Internal Server Error'
+  });  
 });
-
-

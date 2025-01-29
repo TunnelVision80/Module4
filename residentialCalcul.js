@@ -1,5 +1,7 @@
-import {UNIT_PRICE, INSTALL_PERCENT_FEES, FORMATTER} from './data.js';
+const {UNIT_PRICE, INSTALL_PERCENT_FEES, FORMATTER} = require('./data.js');
 
-export const calcResidential = (numberofApts, numberofFloors) => {
+ const residentialCalcul = (numberofApts, numberofFloors) => {
     
 }
+
+module.exports = {residentialCalcul};
