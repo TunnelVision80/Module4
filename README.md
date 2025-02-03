@@ -1,7 +1,7 @@
 # Module4
 Codeboxx Module Module 4
 
-## Research Documentation 
+## Research Documentation ( Bonus Points)
 
 ## What is Node.js?
 Node.js is a runtime environment that allows you to run JavaScript on the server-side, outside of a web browser. It’s built on the V8 JavaScript engine (the same engine that powers Google Chrome) and enables developers to build scalable, high-performance applications, particularly for building web servers and networked applications.
@@ -39,3 +39,28 @@ Here are three reasons why developers often choose Node.js with Express for buil
 Would you like to know more about how Node.js and Express can be used in a specific type of project?
 
 
+
+## // look for: what's the defference between using .send and .json
+
+.send(data)
+
+Can send strings, objects, buffers, or arrays.
+Automatically detects the content type (e.g., text/plain for strings, application/json for objects).
+If you pass an object, Express will internally convert it to JSON before sending.
+
+.json(data)
+
+Specifically sends JSON data.
+Ensures that the Content-Type header is set to application/json.
+Only works with objects or arrays (not strings).
+
+## C.R.U.D - Restful API's
+Create - Post   
+Read - Get
+Update - Put/Patch
+Delete - Delete
+
+## Middleware ia provided 
+Built-in Middleware - (Comes with Express)
+Third-Party Middleware - (Installed via npm) cookie - parser
+Custom Middleware - (User-defined) base - middleware
