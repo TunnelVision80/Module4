@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config(); 
 const express = require('express');
 const app = express();
 app.use(express.json());
@@ -10,8 +11,6 @@ app.listen(port, () => {
 // Require data from data.js
 const  {AGENTS_LIST, FORMATTER } = require('./data.js');
 const { residentialCalcul } = require('./residentialCalcul.js');
-const environment = process.env.ENVIORMENT;
-
 
 const hello = (req, res) => {
   console.log('Hello, World!');
@@ -19,23 +18,40 @@ const hello = (req, res) => {
 };
 
 const status = (req, res) => {
-  const ENV = process.env.ENVIORMENT;
-  res.send('environment (ENV) is listening on port (PORT)');
+  const environment = process.env.ENVIRONMENT;
+  const port = process.env.PORT;
+  res.send(`Environment (${environment}) is listening on port (${port})`);
 };
-
-
-
-app.get('/hello/:name', (req, res) => {
-  const name = req.params.name;
-  res.send(`Hello, ${name}!`);
-});
-
+ 
 const emailList = (req, res) => {
   const emailList = AGENTS_LIST.map(agent => agent.email);
   res.json('emailList');
 };
 
-app.get('/email-list', emailList); // Fix: changed to lowercase "l"
+const calcResidential = (req, res) => {
+  res.send('calcResidential');
+};
+
+
+// New endpoint: /region/avg
+const regionAvg = (req, res) => {
+  return res.status(200).send('Region average data');
+};
+
+
+const contactUs = (req, res) => {
+  return res.status(200).send('Contact Us');
+};
+
+
+
+// Catch-all error handler
+const error = (req, res) => {
+  res.status(500).json({
+    errorCode: 500,
+    message: 'Internal Server Error'
+  });  
+};
 
 //  Fuctions to set up API Endpoints
 const apiEndpoint = (APP) => {
@@ -49,22 +65,4 @@ const apiEndpoint = (APP) => {
 
 };
 
-const calcResidential = (req, res) => {
-  res.send('calcResidential');
-};
-
-// New endpoint: /region/avg
-const regionAvg = (req, res) => {
-  // TO DO: implement logic to calculate average region data
-  res.send('Region average data');
-};
-
-app.get('/region/avg', regionAvg);
-
-// Catch-all error handler
-app.get('/error', (req, res) => {
-  res.status(500).json({
-    errorCode: 500,
-    message: 'Internal Server Error'
-  });  
-});
+apiEndpoint(app);
