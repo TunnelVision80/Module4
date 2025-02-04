@@ -16,8 +16,20 @@ const AGENTS_LIST =
     {"first_name":"Tanim","last_name":"Homaini","email":"tanim@rocket.elv","region":"south","rating":"96","fee":"10000"},
     {"first_name":"Roger","last_name":"Babbel","email":"loons@rocket.elv","region":"north","rating":"60","fee":"5000"},
     {"first_name":"Zach","last_name":"Van Den Zilch","email":"zach@rocket.elv","region":"north","rating":"70","fee":"6000"},
-    {"first_name":"Al","last_name":"Stein","email":"relative@rocket.elv","region":"south","rating":"54","fee":"4000"}
+    {"first_name":"Al","last_name":"Stein","email":"relative@rocket.elv","region":"south","rating":"54","fee":"4000"}   
   ]
   
-  module.exports = { AGENTS_LIST };
-    
+  const pricing = {
+    standard: { price: 8000, fee: 0.10 },
+    premium: { price: 12000, fee: 0.15 },
+    excelium: { price: 15000, fee: 0.20 },
+  };
+
+  // pricing.standard.price
+  // pricing.standard.fee
+  // pricing.premium.price
+  // pricing.premium.fee
+  // pricing.excelium.price
+  // pricing.excelium.fee  
+  
+  module.exports = { AGENTS_LIST, pricing };
