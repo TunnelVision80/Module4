@@ -9,19 +9,16 @@ const bodyParser = require("body-parser");
 
 // Require data from data.js
 const  { AGENTS_LIST, pricing } = require('./data.js');
-const { residentialEvelatorCalcul } = require('./residentialCalcul.js');
+const { residentialElevatorCalcul } = require('./residentialCalcul.js');
 
 
 
 
 // const is a word to declare a variable
 const hello = (req, res) => {
-  TODO:
-  // We want to confirm that our environment is running properly. Add a log that reports the port in use.
   console.log('Hello, World!');
-  
-  // here the response (.send) send a string
-  res.send('Hello, World!');
+  console.log (`Server is running on port ${process.env.PORT}`);
+  res.send(`Hello, World! (running on port ${port})`);
 };
 
 
@@ -43,16 +40,7 @@ const error = (req, res) => {
 
 
 const emailList = (req, res) => {
-  TODO:
-  // returns a comma-delimited list of emails for all the agents in the list provided.
-  // One step is missing and it's to change the Array into a string seperated by a comma ','
-  // https://www.w3schools.com/jsref/jsref_join.asp
-  // Read the Description
-  // You want to use the method with another separator.
-  // TRY IT YOURSELF
-  // [ "string", "string" ]
-  // the answer need to be: "string", "string"
-  const emailList = AGENTS_LIST.map(agent => agent.email)//.method(something here too);
+  const emailList = AGENTS_LIST.map(agent => agent.email).join(', ');
   res.send(emailList);
 };
 
@@ -73,6 +61,40 @@ const emailList = (req, res) => {
 // req.query.Aparments
 
 const calcResidential = (req, res) => {
+  const numberOfApts = req.query.Apartments;
+  const numberofFloors = req.query.Floors;
+  const numberofTiers = req.query.Tier;
+
+  const numberofElevators = residentialElevatorCalcul(numberOfApts,numberofFloors)
+  if (!pricing [numberofTiers]) {
+    return res.status(400).json ({error: "Invalid pricing tier"});
+  
+  }
+  const tierPricing = pricing[numberofTiers];
+  const standardCost = numberofElevators * tierPricing.price + (numberofElevators * tierPricing.price * tierPricing.fee);
+  const premiumCost = numberofElevators * tierPricing.price + (numberofElevators * tierPricing.price * tierPricing.fee);
+  const exceliumCost = numberofElevators * tierPricing.price + (numberofElevators * tierPricing.price * tierPricing.fee);
+  const totalPrice = numberofElevators * tierPricing.price + (numberofElevators * tierPricing.price* tierPricing.fee);
+  const result = {
+    numberOfElevators:numberofElevators,
+    totalPrice: totalPrice.toFixed (2),
+  };
+  console.log(`Standard Tier Cost: $${standardCost.toFixed(2)}`);
+  console.log(`Premium Tier Cost: $${premiumCost.toFixed(2)}`);
+  console.log(`Excelium Tier Cost: $${exceliumCost.toFixed(2)}`);
+  
+  res.send(result);
+};
+   
+    // pricing.standard
+    // pricing.standard.fee
+    
+    // req.body => object => { key:value }
+    // req.query => object => { key:value }
+    // { Apartments: '100', Floors: '6', Tier: 'Standard' }
+    
+    // req.body.Aparments
+    // req.query.Aparments
   // ALWAYS TEST YOUR VARIABLE WITH A CONSOLE.lOG
 
   // The parameters will come from the request
@@ -85,7 +107,7 @@ const calcResidential = (req, res) => {
     // Tier (standard, premium, excelium)
 
   // Use the function you have in residentialCalcul.ja to make the calculation.
-  // const numberOfElevator = residentialEvelatorCalcul( Number of Apartment, Number of Floors)
+  // const numberOfElevator = residentialElevatorCalcul( Number of Apartment, Number of Floors)
 
   // if (statement) {}
   // Use an if statement to verify what Tier we have to precise the calculation depending of it.
@@ -99,40 +121,47 @@ const calcResidential = (req, res) => {
 
   // const result = {key:value} 
 
-res.send("Placeholder Response");
-// res.send(result);
-};
+
+
 
 // New endpoint: /region/avg
 const regionAvg = (req, res) => {
-  FIXME:
-  // an API that accepts region as a query parameter
-  const region = req.query.region || req.params.region;
+  const region = req.query.region;
+  const agentsInRegion = AGENTS_LIST.filter(agent => agent.region === region);
+  if (agentsInRegion.length === 0) {
+    return res.status(404).send({ message: `No agents found in the supplied region ${region}` });
+  }
+  const ratings = agentsInRegion.map(agent => agent.rating);
+  const fees = agentsInRegion.map(agent => agent.fee);
+  const averageRating = ratings.reduce((a, b) => a + b, 0) / ratings.length;
+  const averageFee = fees.reduce((a, b) => a + b, 0) / fees.length;
+  const roundedAverageRating = Math.round(averageRating * 100) / 100;
+  const roundedAverageFee = Math.round(averageFee * 100) / 100;
 
-  TODO:
-  // if no agents exist in a region, do not calculate averages.
-  // return a message stating no agents were found in the supplied region.
-  // console.log()
+  const finalAvgRating = parseFloat(averageRating.toFixed(2));
+const finalAvgFee = parseFloat(averageFee.toFixed(2));
+console.log("Final Average Rating:", finalAvgRating);
+console.log("Final Average Fee:", finalAvgFee);
 
-  TODO:
-  // get the value you need instead of email.
-  // const regionRating = AGENTS_LIST.map(agent => agent.email);
-  // const regionFee = AGENTS_LIST.map(agent => agent.email);
-  
-  TODO:
-  // How To Calculate the Average of Array Elements
-  // https://www.w3schools.com/java/java_howto_calculate_avg_array.asp
-
-  TODO:
-  // Returns the average rating and fee for agents in that region.
-  // The response should be in the form of an object containing key-value pairs for region
-  // { average rating : value,  average fee : value }
-  // All number should be rounded to two decimal places
-  return res.status(200).send('Region average data');
+  return res.status(200).send({
+    region,
+    averageRating: roundedAverageRating,
+    averageFee: roundedAverageFee
+  });
 };
 
 const contactUs = (req, res) => {
-  return res.status(200).send('Contact Us');
+  const { first_name, last_name, message } = req.body;
+  if (!first_name || !last_name || !message) {
+    return res.status(400).json({ error: 'All fields are required: first_name, last_name, message' });
+  }
+  const responseMessage = {
+   
+    message: `Thank you, ${first_name} ${last_name}, for reaching out! We have received your message ${message}.`,
+
+  };
+  console.log('Contact Us Request:', responseMessage);
+  return res.status(200).send(responseMessage);
 };
 
 

@@ -18,13 +18,12 @@ const AGENTS_LIST =
     {"first_name":"Zach","last_name":"Van Den Zilch","email":"zach@rocket.elv","region":"north","rating":"70","fee":"6000"},
     {"first_name":"Al","last_name":"Stein","email":"relative@rocket.elv","region":"south","rating":"54","fee":"4000"}   
   ]
-  
-  const pricing = {
-    standard: { price: 8000, fee: 0.10 },
-    premium: { price: 12000, fee: 0.15 },
-    excelium: { price: 15000, fee: 0.20 },
-  };
 
+    const pricing = {
+      standard: { price: 8000, fee: 0.10 },
+      premium: { price: 12000, fee: 0.15 },
+      excelium: { price: 15000, fee: 0.20 },
+    };
   // pricing.standard.price
   // pricing.standard.fee
   // pricing.premium.price
@@ -32,4 +31,4 @@ const AGENTS_LIST =
   // pricing.excelium.price
   // pricing.excelium.fee  
   
-  module.exports = { AGENTS_LIST, pricing };
+  module.exports = { AGENTS_LIST, pricing, };
