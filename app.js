@@ -5,7 +5,7 @@ const express = require('express');
 //when we call express() it will return a variable that equal the function express()
 const app = express();
 app.use(express.json());
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5050
 const bodyParser = require("body-parser");
 
 // here we are calling the function
@@ -25,7 +25,6 @@ const hello = (req, res) => {
 // our second endpoint
 const status = (req, res) => {
   const environment = process.env.ENVIRONMENT;
-  const port = process.env.PORT; // we are calling the variable from the .env file.
   res.send(`Environment (${environment}) is listening on port (${port})`);
 };
 
@@ -86,13 +85,14 @@ const regionAvg = (req, res) => {
   const fees = agentsInRegion.map(agent => agent.fee);
   console.log("Fees:",fees);
 
-  const averageRating = ((ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(2));
-  const averageFee = ((fees.reduce((a, b) => a + b, 0) / fees.length).toFixed(2));
+  const averageRating = (ratings.reduce((a, b) => a + b, 0) / ratings.length);
+  const averageFee = (fees.reduce((a, b) => a + b, 0) / fees.length);
   console.log("Average Rating:",averageRating);
+
     console.log("Average Fee:",averageFee);
     
-  const finalAvgRating = parseFloat(averageRating);
-const finalAvgFee = parseFloat(averageFee);
+  const finalAvgRating = Number(averageRating).toFixed(2);
+const finalAvgFee = Number(averageFee).toFixed(2);
 console.log(`Final Average Rating: ${averageRating}`);
 console.log(`Final Average Fee: ${averageFee}`);
 
