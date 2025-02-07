@@ -20,7 +20,7 @@ const AGENTS_LIST =
   ]
 
     const pricing = {
-      standard: { price: 8000, fee: 0.10 },
+      standard: { price: 8000, fee:  0.10 },
       premium: { price: 12000, fee: 0.15 },
       excelium: { price: 15000, fee: 0.20 },
     };

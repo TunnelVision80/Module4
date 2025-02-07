@@ -64,3 +64,78 @@ Delete - Delete
 Built-in Middleware - (Comes with Express)
 Third-Party Middleware - (Installed via npm) cookie - parser
 Custom Middleware - (User-defined) base - middleware
+
+// pricing.standard
+    // pricing.standard.fee
+    
+    // req.body => object => { key:value }
+    // req.query => object => { key:value }
+    // { Apartments: '100', Floors: '6', Tier: 'Standard' }
+    
+    // req.body.Aparments
+    // req.query.Aparments
+  // ALWAYS TEST YOUR VARIABLE WITH A CONSOLE.lOG
+
+  // The parameters will come from the request
+    // req.body
+    // req.query
+
+  // Need 3 parameters to be able to calculate the quote residential
+    // Number of Floors (number)
+    // Number of Apartment (number)
+    // Tier (standard, premium, excelium)
+
+  // Use the function you have in residentialCalcul.ja to make the calculation.
+  // const numberOfElevator = residentialElevatorCalcul( Number of Apartment, Number of Floors)
+
+  // if (statement) {}
+  // Use an if statement to verify what Tier we have to precise the calculation depending of it.
+
+  // Using the Tier (standard, premium, excelium)
+
+  // unit price (1 elevator) depending of the Tier
+  // price of elevators = number of elevator * unit price
+  // installation fee (depending of the Tier)
+  // totalprice = price of elevators + installation fee 
+
+  // const result = {key:value} 
+
+
+// Arrow Function. It's a function using Name = () => {}
+// It is exactly the same thing as a functionName(){}
+
+// inside the parentheses, we call that : parameters
+
+// const pricing = {
+//    standard: { price: 8000, fee: 0.10 },
+//    premium: { price: 12000, fee: 0.15 },
+//    excelium: { price: 15000, fee: 0.20 },
+// };
+
+// pricing.standard
+// pricing.standard.fee
+
+// req.body => object => { key:value }
+// req.query => object => { key:value }
+// { Apartments: '100', Floors: '6', Tier: 'Standard' }
+
+// req.body.Aparments
+// req.query.Aparments
+
+const queriesExample = (req, res) => {
+  // deconstruct the variable from an object (the object is the request we receive)
+  const { bodyExample } = req.body
+  console.log(bodyExample)
+
+  const { queryExample } = req.query
+  console.log(queryExample)
+
+  const { paramsExample } = req.params
+  console.log(paramsExample)
+
+  const { key1 } = deconstruct
+  console.log(key1)
+
+  // console.log("console.log of our test as a string")
+  res.send("reponse of our test as a string")
+}
